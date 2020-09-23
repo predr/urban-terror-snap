@@ -13,6 +13,7 @@ apps:
   urban-terror:
     command: UrbanTerror43/Quake3-UrT.x86_64
     environment:
+      LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
       DISABLE_WAYLAND: 1
       SDL_AUDIODRIVER: pulse
     plugs:
@@ -57,6 +58,7 @@ parts:
       - zlib1g
       - libslang2
       - freeglut3
+      - libgl1-mesa-dri
     prime:
       - -UrbanTerror43/Quake3-UrT.app
       - -UrbanTerror43/Quake3-UrT.exe
