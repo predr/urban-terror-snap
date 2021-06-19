@@ -36,7 +36,7 @@ apps:
 parts:
   engine:
     plugin: dump
-    source: http://builds.iourtm9.tk/urt/build-142/ioq3urt-m9-release-linux64-2014-12-12-596b587.zip
+    source: http://builds.iourtm9.tk/urt/build-143/ioq3urt-m9-release-linux64-2014-12-12-596b587.zip
     source-checksum: md5/82d7d153f66f102166d93f33510e5cfe
 
   data:
