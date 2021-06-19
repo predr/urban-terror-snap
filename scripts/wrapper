@@ -1,0 +1,17 @@
+#!/bin/bash
+
+case "$1" in
+    urban-terror)
+        shift
+        if [ ! -e "$SNAP_USER_DATA"/.q3a/q3ut4/q3config.cfg ]; then
+            # Try to prevent resolution change to desktop on first run
+            exec "$SNAP"/urbanterror-m9.x86_64 "$@" +set r_mode -2 "$@"
+        else
+            exec "$SNAP"/urbanterror-m9.x86_64 "$@" "$@"
+        fi
+        ;;
+    urban-terror.dedicated)
+        shift
+        exec "$SNAP"/urbanterror-server-m9.x86_64 "$@"
+        ;;
+esac

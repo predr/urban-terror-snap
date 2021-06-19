@@ -11,7 +11,7 @@ architectures:
 
 apps:
   urban-terror:
-    command: UrbanTerror43/Quake3-UrT.x86_64
+    command: wrapper urban-terror
     environment:
       LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
       DISABLE_WAYLAND: 1
@@ -28,40 +28,55 @@ apps:
       - audio-playback
 
   dedicated:
-    command: UrbanTerror43/Quake3-UrT-Ded.x86_64
+    command: wrapper urban-terror.dedicated
     plugs:
       - network
       - network-bind
 
 parts:
-  urban-terror:
-    source: http://cdn.urbanterror.info/urt/43/releases/zips/UrbanTerror434_full.zip
+  engine:
     plugin: dump
-    stage-packages:
-      - libasound2
-      - libbsd0
-      - libcurl3
-      - libgcc1
-      - libglu1-mesa
-      - libjpeg62
-      - libpulse0
-      - libsdl1.2debian
-      - libstdc++6
-      - libvorbisfile3
-      - libx11-6
-      - libxau6
-      - libxcb1
-      - libxdmcp6
-      - libxext6
-      - libxpm4
-      - libxxf86vm1
-      - zlib1g
-      - libslang2
-      - freeglut3
-      - libgl1-mesa-dri
+    source:
+      - try: sources/ioq3urt-m9-release-linux64-2014-12-12-596b587.zip
+      - else: http://builds.iourtm9.tk/urt/build-142/ioq3urt-m9-release-linux64-2014-12-12-596b587.zip
+    source-checksum: md5/82d7d153f66f102166d93f33510e5cfe
+
+  data:
+    plugin: dump
+    source:
+      - try: sources/UrbanTerror434_full.zip
+      - else: http://cdn.urbanterror.info/urt/43/releases/zips/UrbanTerror434_full.zip
+    source-checksum: md5/9bf7f0092161391697d24f6b004a6c6b
+    source-subdir: UrbanTerror43
     prime:
-      - -UrbanTerror43/Quake3-UrT.app
-      - -UrbanTerror43/Quake3-UrT.exe
-      - -UrbanTerror43/Quake3-UrT.i386
-      - -UrbanTerror43/Quake3-UrT-Ded.exe
-      - -UrbanTerror43/Quake3-UrT-Ded.i386
+      - -Quake3-UrT*
+
+  stage:
+    plugin: nil
+    stage-packages:
+    - libasound2
+    - libbsd0
+    - libcurl3
+    - libgcc1
+    - libglu1-mesa
+    - libjpeg62
+    - libpulse0
+    - libsdl2-2.0-0
+    - libstdc++6
+    - libvorbisfile3
+    - libx11-6
+    - libxau6
+    - libxcb1
+    - libxdmcp6
+    - libxext6
+    - libxpm4
+    - libxxf86vm1
+    - zlib1g
+    - libslang2
+    - freeglut3
+    - libgl1-mesa-dri
+
+  scripts:
+    plugin: dump
+    source: scripts
+    
