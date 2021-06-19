@@ -36,16 +36,12 @@ apps:
 parts:
   engine:
     plugin: dump
-    source:
-      - try: sources/ioq3urt-m9-release-linux64-2014-12-12-596b587.zip
-      - else: http://builds.iourtm9.tk/urt/build-142/ioq3urt-m9-release-linux64-2014-12-12-596b587.zip
+    source: http://builds.iourtm9.tk/urt/build-142/ioq3urt-m9-release-linux64-2014-12-12-596b587.zip
     source-checksum: md5/82d7d153f66f102166d93f33510e5cfe
 
   data:
     plugin: dump
-    source:
-      - try: sources/UrbanTerror434_full.zip
-      - else: http://cdn.urbanterror.info/urt/43/releases/zips/UrbanTerror434_full.zip
+    source: http://cdn.urbanterror.info/urt/43/releases/zips/UrbanTerror434_full.zip
     source-checksum: md5/9bf7f0092161391697d24f6b004a6c6b
     source-subdir: UrbanTerror43
     prime:
