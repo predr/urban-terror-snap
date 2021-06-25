@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Required for audio to work on Wayland, hooks into local pulse server.
+pulse_native="$XDG_RUNTIME_DIR/../pulse/native"
+test -S "$pulse_native" && export PULSE_SERVER="unix:${pulse_native}"
+
 WRAPPER="$1"; shift
 case "$WRAPPER" in
     urban-terror)
