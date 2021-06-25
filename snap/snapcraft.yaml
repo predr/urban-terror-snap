@@ -42,8 +42,25 @@ parts:
     stage:
       - q3ut4/*
 
-  stage:
-    plugin: nil
+  patches:
+    plugin: dump
+    source: patches
+    override-pull: |
+      snapcraftctl pull
+      cp *.diff "$SNAPCRAFT_STAGE"
+    prime:
+      - -*.diff
+
+  engine:
+    plugin: make
+    source: https://github.com/FrozenSand/ioq3-for-UrbanTerror-4.git
+    source-tag: release-4.3.4
+    source-depth: 1
+    override-build: |
+      patch code/unix/sdl_glimp.c "$SNAPCRAFT_STAGE"/sdl_glimp.diff
+      make && cp build/*/Quake3-UrT* "$SNAPCRAFT_PART_INSTALL"
+    build-packages:
+      - libsdl1.2-dev
     stage-packages:
       - libasound2
       - libbsd0
@@ -66,26 +83,6 @@ parts:
       - libslang2
       - freeglut3
       - libgl1-mesa-dri
-
-  patches:
-    plugin: dump
-    source: patches
-    override-pull: |
-      snapcraftctl pull
-      cp *.diff "$SNAPCRAFT_STAGE"
-    prime:
-      - -*.diff
-
-  engine:
-    plugin: make
-    source: https://github.com/FrozenSand/ioq3-for-UrbanTerror-4.git
-    source-tag: release-4.3.4
-    source-depth: 1
-    override-build: |
-      patch code/unix/sdl_glimp.c "$SNAPCRAFT_STAGE"/sdl_glimp.diff
-      make release && cp build/*/Quake3-UrT* "$SNAPCRAFT_PART_INSTALL"
-    build-packages:
-      - libsdl1.2-dev
 
   scripts:
     plugin: dump

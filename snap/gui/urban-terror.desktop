@@ -6,4 +6,3 @@ Exec=urban-terror
 Icon=${SNAP}/meta/gui/icon.png
 Categories=Game;ActionGame;
 Keywords=urt;ut4;fps;ioquake;q3a;
-StartupWMClass=urbanterror-m9.x86_64
