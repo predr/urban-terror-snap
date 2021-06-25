@@ -14,8 +14,8 @@ apps:
     command: wrapper urban-terror
     environment:
       LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
-      DISABLE_WAYLAND: 1
       SDL_AUDIODRIVER: pulse
+      DISABLE_WAYLAND: 1
     plugs:
       - desktop
       - desktop-legacy
@@ -34,45 +34,59 @@ apps:
       - network-bind
 
 parts:
-  engine:
-    plugin: dump
-    source: http://builds.iourtm9.tk/urt/build-143/ioq3urt-m9-release-linux64-2014-12-12-596b587.zip
-    source-checksum: md5/82d7d153f66f102166d93f33510e5cfe
-
   data:
     plugin: dump
     source: http://cdn.urbanterror.info/urt/43/releases/zips/UrbanTerror434_full.zip
     source-checksum: md5/9bf7f0092161391697d24f6b004a6c6b
     source-subdir: UrbanTerror43
-    prime:
-      - -Quake3-UrT*
+    stage:
+      - q3ut4/*
 
   stage:
     plugin: nil
     stage-packages:
-    - libasound2
-    - libbsd0
-    - libcurl3
-    - libgcc1
-    - libglu1-mesa
-    - libjpeg62
-    - libpulse0
-    - libsdl2-2.0-0
-    - libstdc++6
-    - libvorbisfile3
-    - libx11-6
-    - libxau6
-    - libxcb1
-    - libxdmcp6
-    - libxext6
-    - libxpm4
-    - libxxf86vm1
-    - zlib1g
-    - libslang2
-    - freeglut3
-    - libgl1-mesa-dri
+      - libasound2
+      - libbsd0
+      - libcurl3
+      - libgcc1
+      - libglu1-mesa
+      - libjpeg62
+      - libpulse0
+      - libsdl1.2debian
+      - libstdc++6
+      - libvorbisfile3
+      - libx11-6
+      - libxau6
+      - libxcb1
+      - libxdmcp6
+      - libxext6
+      - libxpm4
+      - libxxf86vm1
+      - zlib1g
+      - libslang2
+      - freeglut3
+      - libgl1-mesa-dri
+
+  patches:
+    plugin: dump
+    source: patches
+    override-pull: |
+      snapcraftctl pull
+      cp *.diff "$SNAPCRAFT_STAGE"
+    prime:
+      - -*.diff
+
+  engine:
+    plugin: make
+    source: https://github.com/FrozenSand/ioq3-for-UrbanTerror-4.git
+    source-tag: release-4.3.4
+    source-depth: 1
+    override-build: |
+      patch code/unix/sdl_glimp.c "$SNAPCRAFT_STAGE"/sdl_glimp.diff
+      make release && cp build/*/Quake3-UrT* "$SNAPCRAFT_PART_INSTALL"
+    build-packages:
+      - libsdl1.2-dev
 
   scripts:
     plugin: dump
     source: scripts
-    
