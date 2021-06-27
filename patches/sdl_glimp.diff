@@ -1,8 +1,4 @@
-# Fix mouse cursor not hiding after using Alt-Tab
 393c393
 <       if( ( e.active.state & SDL_APPACTIVE ) && e.active.gain )
 ---
 >       if( SDL_APPACTIVE && e.active.gain )
-1933a1934
-> 
- 
