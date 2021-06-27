@@ -1,13 +1,19 @@
 #!/bin/bash
 
-# Required for audio to work on Wayland, hooks into local pulse server.
-pulse_native="$XDG_RUNTIME_DIR/../pulse/native"
-test -S "$pulse_native" && export PULSE_SERVER="unix:${pulse_native}"
-
 WRAPPER="$1"; shift
 case "$WRAPPER" in
     urban-terror)
-        exec "$SNAP"/Quake3-UrT.x86_64 "$@"
+
+        # Required for audio to work on Wayland, hooks into local pulse server.
+        pulse_native="$XDG_RUNTIME_DIR/../pulse/native"
+        test -S "$pulse_native" && export PULSE_SERVER="unix:${pulse_native}"
+
+        # Normal or protocol urt://<IP>:<PORT> launch
+        if test "${1:0:3}" == "urt"; then
+            exec "$SNAP"/Quake3-UrT.x86_64 connect "${1:6}"
+        else
+            exec "$SNAP"/Quake3-UrT.x86_64 "$@"
+        fi
         ;;
     urban-terror.dedicated)
         exec "$SNAP"/Quake3-UrT-Ded.x86_64 "$@"
