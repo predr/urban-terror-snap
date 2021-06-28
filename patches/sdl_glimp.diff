@@ -1,4 +1,4 @@
 393c393
 <       if( ( e.active.state & SDL_APPACTIVE ) && e.active.gain )
 ---
->       if( SDL_APPACTIVE && e.active.gain )
+>       if( ( e.active.state & SDL_APPINPUTFOCUS ) && e.active.gain )
