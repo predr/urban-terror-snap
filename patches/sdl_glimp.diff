@@ -2,3 +2,6 @@
 <       if( ( e.active.state & SDL_APPACTIVE ) && e.active.gain )
 ---
 >       if( ( e.active.state & SDL_APPINPUTFOCUS ) && e.active.gain )
+407a408,409
+>       if (e.key.keysym.mod & KMOD_ALT && e.key.keysym.sym & K_F4)
+>         Sys_Quit();
