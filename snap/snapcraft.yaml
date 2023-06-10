@@ -3,17 +3,19 @@ summary: Free multiplayer first person shooter developed by FrozenSand
 description: Urban Terror™ can be described as a Hollywood tactical shooter; somewhat realism based, but the motto is «fun over realism». This results in a very unique, enjoyable and addictive game.
 
 version: 4.3.4
-base: core18
+base: core22
 grade: stable
 confinement: strict
 architectures:
   - build-on: amd64
+compression: lzo
 
 apps:
   urban-terror:
     command: wrapper urban-terror
     environment:
       LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
+      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/pulseaudio
       SDL_AUDIODRIVER: pulse
     plugs:
       - desktop
@@ -45,8 +47,8 @@ parts:
     plugin: dump
     source: patches
     override-pull: |
-      snapcraftctl pull
-      cp *.diff "$SNAPCRAFT_STAGE"
+      craftctl default
+      cp *.diff "$CRAFT_STAGE"
     prime:
       - -*.diff
 
@@ -56,14 +58,15 @@ parts:
     source-tag: release-4.3.4
     source-depth: 1
     override-build: |
-      patch code/unix/sdl_glimp.c "$SNAPCRAFT_STAGE"/sdl_glimp.diff
-      make && cp build/*/Quake3-UrT* "$SNAPCRAFT_PART_INSTALL"
+      patch code/unix/sdl_glimp.c "$CRAFT_STAGE"/sdl_glimp.diff
+      make && cp build/*/Quake3-UrT* "$CRAFT_PART_INSTALL"
     build-packages:
       - libsdl1.2-dev
+      - libxxf86vm-dev
     stage-packages:
       - libasound2
       - libbsd0
-      - libcurl3
+      - libcurl4
       - libgcc1
       - libglu1-mesa
       - libjpeg62
